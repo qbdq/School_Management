@@ -5,7 +5,7 @@ from django.db.models.expressions import F
 from django.utils import timezone
 
 # Create your models here.
-dir = ''
+dir = '../media'
 
 
 # This class will be herited from
