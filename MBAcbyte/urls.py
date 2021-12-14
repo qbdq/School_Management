@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from student_mangement import views
+from . import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('test/',views.showDemoPage),
+    path('add_student/',views.add_student ,name='test'),
+    path('add_student_save', views.add_student_save,name="add_student_save"),
+
+
+    path('admin/', admin.site.urls)
+
 ]

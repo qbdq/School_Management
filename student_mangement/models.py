@@ -4,6 +4,7 @@ from django.db.models import base
 from django.db.models.expressions import F
 from django.utils import timezone
 
+
 # Create your models here.
 dir = '../media'
 
@@ -24,13 +25,14 @@ class Person(models.Model):
 # La classe Module
 class Module (models.Model): 
     # Module choices
-    type_module = models.TextChoices('Obligatoire' ,'Optionnel')#adjust
+    class Module_Choices (models.TextChoices):
+        obligatoire = "Obligatoire"
+        optionnel = "Optionnel"
 
-    # Model attributes
     id_module = models.AutoField(primary_key=True)
     nom_module = models.CharField(max_length=30, blank=False, unique=True)
-    nbr_heures_module = models.PositiveIntegerField(blank=False)
-    type_module = models.CharField(max_length=2,choices=type_module.choices)
+    nbr_heures_module = models.PositiveIntegerField(default=0, blank=False)
+    type_module = models.CharField(max_length=20,choices=Module_Choices.choices , default = Module_Choices.obligatoire)
     niveau_etude = models.CharField(max_length=30, blank=False)
 
     class Meta:
@@ -42,10 +44,10 @@ class Module (models.Model):
 class Groupe (models.Model) : 
     id_groupe = models.AutoField(primary_key=True)
     nom_groupe = models.CharField(max_length=10, blank=False)
-    nombre_etudiant = models.PositiveIntegerField(max_length=40, blank=False)
+    nombre_etudiant = models.PositiveIntegerField(default=0,blank=False)
     mail_groupe = models.EmailField(max_length=70,null=True,blank=True)
     niveau_etude = models.CharField(max_length=10, blank=False)
-    module_groupe=models.ManyToManyField(Module) ## adjust table
+    module_groupe=models.ManyToManyField(Module ) # , through=  'id_module'  , through_fields =('','')
 
     class Meta:
         db_table='Groupe'
@@ -54,7 +56,9 @@ class Groupe (models.Model) :
 
 
 class Travail_A_Rendre (models.Model):
-    EtatTAF  = models.TextChoices('valide','non valide')#adjust
+    class EtatTAF (models.TextChoices):
+        valid = "Valide"
+        non_valid = "non valide"
 
     id_taf = models.AutoField(primary_key=True)
     titre = models.CharField(max_length=50, blank=False)
@@ -64,8 +68,8 @@ class Travail_A_Rendre (models.Model):
     descriptif_taf = models.CharField(max_length=200, blank=False)
     pieces_enonce = models.FileField(upload_to=dir, max_length= 254) 
     pieces_rendu = models.FileField(upload_to=dir, max_length= 254) 
-    etat_travail = models.CharField(max_length=10,choices=EtatTAF.choices)
-    note = models.PositiveIntegerField(max_length=2, default=0, blank=True)
+    etat_travail = models.CharField(max_length=10,choices=EtatTAF.choices , default=EtatTAF.valid)
+    note = models.PositiveIntegerField(default=0, blank=True)
     commentaire = models.CharField(max_length=100, blank=False)
     id_module=models.ForeignKey(Module,on_delete=models.CASCADE)
 
@@ -78,12 +82,21 @@ class Travail_A_Rendre (models.Model):
 
 class Etudiant (Person) :
     id_etudiant = models.AutoField(primary_key=True)
-    etat_etudiant = models.TextChoices('Abscent','Present','Retard','Exclu') #adjust
-    situation_etudiant = models.TextChoices('Nouveau','Redoublant','Derogatrice','Autre')#adjust
+    class etat_etudiant(models.TextChoices):
+        Absence = 'Abscent' 
+        Exclu = 'Exclu'
+        Retard = 'Retard'
+        Present = 'Present'
+    class situation_etudiant(models.TextChoices):
+        Nouveau = 'Nouveau'
+        Redoublant = 'Redoublant'
+        Derogatrice = 'Derogatrice'
+        Autre = 'Autre'
+
     etat_etudiant = models.CharField(max_length=10,choices=etat_etudiant.choices)
-    situation_etudiant = models.CharField(max_length=10,choices=situation_etudiant.choices)
+    situation_etudiant = models.CharField(max_length=20,choices=situation_etudiant.choices)
     id_groupe=models.ForeignKey(Groupe,on_delete=models.CASCADE)
-    travail_etud=models.ManyToManyField(Travail_A_Rendre) #Adjust
+    travail_etud=models.ManyToManyField(Travail_A_Rendre) # , through=  'id_taf'  , through_fields =('','')
 
     class Meta:
         db_table='etudiant'
@@ -91,25 +104,33 @@ class Etudiant (Person) :
 
 class Enseignant (Person) :
     id_enseignant = models.AutoField(primary_key=True)
-    nbr_heure = models.PositiveIntegerField(max_length=2, blank=False)
-    Modul_ensei=models.ManyToManyField(Module) # Adjust
+    nbr_heure = models.PositiveIntegerField(default=0, blank=False)
+    Modul_ensei=models.ManyToManyField(Module) #  , through=  'id_module'  , through_fields =('',''))  
     class Meta:
         db_table='enseignant'
 
 
 class Seance (models.Model): 
     
-    EtatSeance = models.TextChoices('Annulée','Différée','En cours','Términée')#adjust
-    TypeSeance = models.TextChoices('Normal','Rattrapage','Soutien','Formation')#adjust
+    class EtatSeance(models.TextChoices) : 
+        annule = 'Annulée'
+        differe = 'Différée'
+        en_cours = 'En cours'
+        termine = 'Términée'
+    class TypeSeance(models.TextChoices) : 
+        Normal = 'Normal'
+        Rattrapage = 'Rattrapage'
+        Soutien = 'Soutien'
+        Formation = 'Formation'
 
     id_seance = models.AutoField(primary_key=True)
-    heure_debut = models.PositiveIntegerField(max_length=2, blank=False)
-    heure_fin = models.PositiveIntegerField(max_length=2, blank=False)
-    num_salle =  models.PositiveIntegerField(max_length=100, blank=False)
+    heure_debut = models.PositiveIntegerField(default=0, blank=False)
+    heure_fin = models.PositiveIntegerField(default=0, blank=False)
+    num_salle =  models.PositiveIntegerField(default=0, blank=False)
     objectif =  models.CharField(max_length=100, blank=True)
     resume = models.CharField(max_length=500, blank=True)
-    etat_seance = models.CharField(max_length=6,choices=EtatSeance.choices)
-    type_seance = models.CharField(max_length=2,choices=TypeSeance.choices)
+    etat_seance = models.CharField(max_length=10,choices=EtatSeance.choices)
+    type_seance = models.CharField(max_length=10,choices=TypeSeance.choices)
     outils = models.CharField (max_length=100, blank=True)
     idModule=models.ForeignKey(Module,on_delete=models.CASCADE)
 
@@ -126,7 +147,12 @@ class Seance (models.Model):
 
 
 class Enregistrement (models.Model): 
-    TypeEnregistrement = models.TextChoices('mp4','flv','mov','avi','wmv')#adjust
+    class TypeEnregistrement(models.TextChoices):
+        mp4 = 'mp4'
+        flv = 'flv'
+        mov = 'mov'
+        avi = 'avi'
+        wmv = 'wmv'
     id_enreg = models.AutoField(primary_key=True)
     nom_enreg = models.CharField(max_length=100, blank=False, unique = True)
     url = models.URLField(max_length=100,blank=True)
@@ -148,8 +174,10 @@ class Absence(models.Model):
     Abs_se= models.OneToOneField(
         Seance,
         on_delete=models.CASCADE,
-        primary_key=True,
     ) # Adjust
 
     class Meta:
         db_table='absence'
+
+
+
