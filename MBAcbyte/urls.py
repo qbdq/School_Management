@@ -21,10 +21,20 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('test/',views.showDemoPage),
-    path('add_student/',views.add_student ,name='test'),
-    path('add_student_save', views.add_student_save,name="add_student_save"),
+    path('test/',views.showDemoPage,name ='test'),
 
+    path('add_student/',views.add_student ,name='add_student'),
+    path('add_enseignant/',views.add_enseignant ,name='add_enseignant'),
+    path('add_seance/',views.add_seance ,name='add_seance'),
+    path('add_groupe/',views.add_groupe ,name='add_groupe'),
+    path('add_module/',views.add_module ,name='add_module'),
+
+
+    path('add_student_save', views.add_student_save,name="add_student_save"),
+    path('add_enseignant_save', views.add_student_save,name="add_enseignant_save"),
+    path('add_seance_save', views.add_student_save,name="add_seance_save"),
+    path('add_groupe_save', views.add_student_save,name="add_groupe_save"),
+    path('add_module_save', views.add_student_save,name="add_module_save"),
 
     path('admin/', admin.site.urls)
 

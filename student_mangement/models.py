@@ -124,9 +124,9 @@ class Seance (models.Model):
         Formation = 'Formation'
 
     id_seance = models.AutoField(primary_key=True)
-    heure_debut = models.PositiveIntegerField(default=0, blank=False)
-    heure_fin = models.PositiveIntegerField(default=0, blank=False)
-    num_salle =  models.PositiveIntegerField(default=0, blank=False)
+    heure_debut = models.DateTimeField(default=timezone.now , blank=False)
+    heure_fin = models.DateTimeField(default=timezone.now, blank=False)
+    num_salle =  models.CharField(max_length=4, blank=False)
     objectif =  models.CharField(max_length=100, blank=True)
     resume = models.CharField(max_length=500, blank=True)
     etat_seance = models.CharField(max_length=10,choices=EtatSeance.choices)
