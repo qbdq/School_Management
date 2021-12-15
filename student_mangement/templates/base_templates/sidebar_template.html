@@ -19,56 +19,104 @@
         </div>
       </div>
       <!-- Sidebar Menu -->
-      <!-- Add menu-->
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Ajouter
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
+        <nav class="mt-2">
+        <!-- Add menu-->
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <li class="nav-item">
-                {% url 'add_enseignant' as add_enseignant %}
-                <a href="{% url 'add_enseignant' %}" class="nav-link {% if request.path == add_enseignant %} active {% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Ensegiant </p>
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-edit"></i>
+                  <p>
+                    Ajouter
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    {% url 'add_enseignant' as add_enseignant %}
+                    <a href="{% url 'add_enseignant' %}" class="nav-link {% if request.path == add_enseignant %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Ensegiant </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'add_student' as add_student %}
+                    <a href="{% url 'add_student' %}" class="nav-link {% if request.path == add_student %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Etudiant</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'add_groupe' as add_groupe %}
+                    <a href="{% url 'add_groupe' %}" class="nav-link {% if request.path == add_groupe %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Groupe</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'add_module' as add_module %}
+                    <a href="{% url 'add_module' %}" class="nav-link {% if request.path == add_module %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Module</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'add_seance' as add_seance %}
+                    <a href="{% url 'add_seance' %}" class="nav-link {% if request.path == add_seance %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Seance</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
+              <!-- Manage-->
               <li class="nav-item">
-                {% url 'add_student' as add_student %}
-                <a href="{% url 'add_student' %}" class="nav-link {% if request.path == add_student %} active {% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Etudiant</p>
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-edit"></i>
+                  <p>
+                    Manage
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
-              </li>
-              <li class="nav-item">
-                {% url 'add_groupe' as add_groupe %}
-                <a href="{% url 'add_groupe' %}" class="nav-link {% if request.path == add_groupe %} active {% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Groupe</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                {% url 'add_module' as add_module %}
-                <a href="{% url 'add_module' %}" class="nav-link {% if request.path == add_module %} active {% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Module</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                {% url 'add_seance' as add_seance %}
-                <a href="{% url 'add_seance' %}" class="nav-link {% if request.path == add_seance %} active {% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Seance</p>
-                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    {% url 'manage_enseignants' as manage_enseignants %}
+                    <a href="{% url 'manage_enseignants' %}" class="nav-link {% if request.path == manage_enseignants %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Ensegiant </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'manage_students' as manage_students %}
+                    <a href="{% url 'manage_students' %}" class="nav-link {% if request.path == manage_students %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Etudiant</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'manage_groupes' as manage_groupes %}
+                    <a href="{% url 'manage_groupes' %}" class="nav-link {% if request.path == manage_groupes %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Groupe</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'manage_modules' as manage_modules %}
+                    <a href="{% url 'manage_modules' %}" class="nav-link {% if request.path == manage_modules %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Module</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    {% url 'manage_seances' as manage_seances %}
+                    <a href="{% url 'manage_seances' %}" class="nav-link {% if request.path == manage_seances %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Seance</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
-          </li>
-        </ul>
-      </nav>
+        </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

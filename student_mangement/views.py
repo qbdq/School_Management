@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
 
 from .forms import *
-from .models import Etudiant
+from .models import Enseignant, Etudiant, Module
 # Create your views here.
 
 # test
@@ -128,27 +128,103 @@ def add_module(request):
 
 def manage_student(request):
     students=Etudiant.objects.all()
-    for student in students:
-        print(student.id_etudiant)
-
     return render(request,'manage_students_template.html',{"students":students})
+
+def manage_enseignants(request):
+    enseignants=Enseignant.objects.all()
+    return render(request,'manage_enseignant_template.html',{"enseignants":enseignants})
+
+def manage_groupes(request):
+    groupes=Groupe.objects.all()
+    return render(request,'manage_groupes_template.html',{"groupes":groupes})
+
+def manage_modules(request):
+    modules=Module.objects.all()
+    return render(request,'manage_module_template.html',{"modules":modules})
+
+def manage_seances(request):
+    modules=Module.objects.all()
+    return render(request,'manage_module_template.html',{"modules":modules})
 
 
 def edit_student(request,student_id):
     request.session['student_id']=student_id
-    student=Etudiant.objects.get(admin=student_id)
+    student=Etudiant.objects.get(id_etudiant=student_id)
     form=EditStudentForm()
-    form.fields['email'].initial=student.admin.email
-    form.fields['first_name'].initial=student.admin.first_name
-    form.fields['last_name'].initial=student.admin.last_name
-    form.fields['username'].initial=student.admin.username
-    form.fields['address'].initial=student.address
-    form.fields['course'].initial=student.course_id.id
-    form.fields['sex'].initial=student.gender
-    form.fields['session_start'].initial=student.session_start_year
-    form.fields['session_end'].initial=student.session_end_year
-    return render(request,"edit_student_template.html",{"form":form,"id":student_id,"username":student.admin.username})
+    form.fields['email'].initial=student.adress_email
+    form.fields['first_name'].initial=student.nom
+    form.fields['last_name'].initial=student.prenom
+    form.fields['etat_etudiant'].initial= student.etat_etudiant
+    form.fields['situation_etudiant'].initial= student.situation_etudiant
+    form.fields['date_naissance'].initial=student.date_naissance
 
+    return render(request,"edit_student_template.html",{"form":form,"id":student_id})
 
 def edit_student_save(request):
+    pass
+
+
+def edit_enseignant(request,enseignant_id):
+    request.session['enseignant_id']=enseignant_id
+    enseignant=Enseignant.objects.get(id_enseignant=enseignant_id)
+    form=AddEnseignantForm()
+    form.fields['email'].initial=enseignant.adress_email
+    form.fields['first_name'].initial=enseignant.nom
+    form.fields['last_name'].initial=enseignant.prenom
+    form.fields['nbr_heure'].initial= enseignant.nbr_heure
+    form.fields['date_naissance'].initial=enseignant.date_naissance
+
+    return render(request,"edit_student_template.html",{"form":form,"id":enseignant_id})
+
+def edit_enseignant_save(request):
+    pass
+
+
+def edit_groupe(request,groupe_id):
+    request.session['enseignant_id']=enseignant_id
+    student=Etudiant.objects.get(id_etudiant=enseignant_id)
+    form=EditStudentForm()
+    form.fields['email'].initial=student.adress_email
+    form.fields['first_name'].initial=student.nom
+    form.fields['last_name'].initial=student.prenom
+    form.fields['etat_etudiant'].initial= student.etat_etudiant
+    form.fields['situation_etudiant'].initial= student.situation_etudiant
+    form.fields['date_naissance'].initial=student.date_naissance
+
+    return render(request,"edit_student_template.html",{"form":form,"id":student_id})
+
+def edit_groupe_save(request):
+    pass
+
+
+def edit_module(request,module_id):
+    request.session['enseignant_id']=enseignant_id
+    student=Etudiant.objects.get(id_etudiant=enseignant_id)
+    form=EditStudentForm()
+    form.fields['email'].initial=student.adress_email
+    form.fields['first_name'].initial=student.nom
+    form.fields['last_name'].initial=student.prenom
+    form.fields['etat_etudiant'].initial= student.etat_etudiant
+    form.fields['situation_etudiant'].initial= student.situation_etudiant
+    form.fields['date_naissance'].initial=student.date_naissance
+
+    return render(request,"edit_student_template.html",{"form":form,"id":student_id})
+
+def edit_module_save(request):
+    pass
+
+def edit_seance(request,seance_id):
+    request.session['enseignant_id']=enseignant_id
+    student=Etudiant.objects.get(id_etudiant=enseignant_id)
+    form=EditStudentForm()
+    form.fields['email'].initial=student.adress_email
+    form.fields['first_name'].initial=student.nom
+    form.fields['last_name'].initial=student.prenom
+    form.fields['etat_etudiant'].initial= student.etat_etudiant
+    form.fields['situation_etudiant'].initial= student.situation_etudiant
+    form.fields['date_naissance'].initial=student.date_naissance
+
+    return render(request,"edit_student_template.html",{"form":form,"id":student_id})
+
+def edit_seance_id_save(request):
     pass

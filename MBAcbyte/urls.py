@@ -31,15 +31,24 @@ urlpatterns = [
 
 
     path('manage_students/',views.manage_student,name='manage_students'),
-    
+    path('manage_enseignants/',views.manage_enseignants,name='manage_enseignants'),
+    path('manage_groupes/',views.manage_groupes,name='manage_groupes'),
+    path('manage_modules/',views.manage_modules,name='manage_modules'),
+    path('manage_seances/',views.manage_seances,name='manage_seances'),
 
-    
+    path('edit_student/<int:student_id>', views.edit_student,name="edit_student"),
+    path('edit_enseignant/<int:enseignant_id>', views.edit_enseignant,name="edit_enseignant"),
+    path('edit_groupe/<int:groupe_id>', views.edit_groupe,name="edit_groupe"),
+    path('edit_module/<int:module_id>', views.edit_module,name="edit_module"),
+    path('edit_seance/<int:seance_id>', views.edit_seance,name="edit_seance"),
+
+
+
     path('add_student_save', views.add_student_save,name="add_student_save"),
     path('add_enseignant_save', views.add_student_save,name="add_enseignant_save"),
     path('add_seance_save', views.add_student_save,name="add_seance_save"),
     path('add_groupe_save', views.add_student_save,name="add_groupe_save"),
     path('add_module_save', views.add_student_save,name="add_module_save"),
-
     path('admin/', admin.site.urls)
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

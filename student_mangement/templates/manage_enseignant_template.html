@@ -1,6 +1,6 @@
 {% extends 'base_templates/base_template.html' %}
 {% block page_title %}
-Manage Student
+Manage Enseignant
 {% endblock page_title %}
 {% block main_content %}
     <!-- Main content -->
@@ -12,7 +12,7 @@ Manage Student
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Student Details</h3>
+                <h3 class="card-title">Enseignant Details</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -35,24 +35,21 @@ Manage Student
                       <th>Email</th>
                       <th>Date of birth</th>
                       <th>Date Joined</th>
-                      <th>Etat Etudiant</th>
-                      <th>Situation Etudiant</th>
-                      <th>Nom du groupe</th>
+                      <th>nombre d'heure</th>
                     </tr>
                   </thead>
                   <tbody>
-                  {% for student in students %}
+                  {% for Enseignant in enseignants %}
                     <tr>
-                      <td>{{ student.id_etudiant}}</td>
-                      <td>{{ student.nom }}</td>
-                      <td>{{ student.prenom }}</td>
-                      <td>{{ student.adress_email }}</td>
-                      <td>{{ student.date_naissance }}</td>
-                      <td>{{ student.Added }}</td>
-                      <td>{{ student.etat_etudiant }}</td>
-                      <td>{{ student.situation_etudiant }}</td>
-                      <td>{{ student.id_groupe.nom_groupe }}</td>
-                      <td><a href="{% url 'edit_student' student_id=student.id_etudiant %}" class="btn btn-success">Edit</a></td>
+                      <td>{{ Enseignant.id_enseignant}}</td>
+                      <td>{{ Enseignant.nom }}</td>
+                      <td>{{ Enseignant.prenom }}</td>
+                      <td>{{ Enseignant.adress_email }}</td>
+                      <td>{{ Enseignant.date_naissance }}</td>
+                      <td>{{ Enseignant.Added }}</td>
+                      <td>{{ Enseignant.nbr_heure }}</td>
+                        <td><a href="{% url 'edit_enseignant' enseignant_id=Enseignant.id_enseignant %}" class="btn btn-success">Edit</a></td>
+                        <td><a href="{% url 'edit_enseignant' enseignant_id=Enseignant.id_enseignant %}" class="btn btn-danger">Delete</a></td>
                     </tr>
                   {% endfor %}
                   </tbody>

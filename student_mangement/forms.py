@@ -70,7 +70,6 @@ class AddModuleForm(forms.Form):
     type_module = forms.ChoiceField(label="Course",choices=Module_Choices,widget=forms.Select(attrs={"class":"form-control"}))
 
 
-
 class EditStudentForm(forms.Form):
     etat = (
         ('Abscent','Abscent'),
@@ -101,3 +100,4 @@ class EditStudentForm(forms.Form):
         small_course=(course.id,course.course_name)
         course_list.append(small_course)
     """
+    
