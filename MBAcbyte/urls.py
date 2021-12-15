@@ -30,6 +30,10 @@ urlpatterns = [
     path('add_module/',views.add_module ,name='add_module'),
 
 
+    path('manage_students/',views.manage_student,name='manage_students'),
+    
+
+    
     path('add_student_save', views.add_student_save,name="add_student_save"),
     path('add_enseignant_save', views.add_student_save,name="add_enseignant_save"),
     path('add_seance_save', views.add_student_save,name="add_seance_save"),
@@ -38,4 +42,4 @@ urlpatterns = [
 
     path('admin/', admin.site.urls)
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

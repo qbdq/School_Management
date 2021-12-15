@@ -3,11 +3,9 @@ from django.db import models
 from django.db.models import base
 from django.db.models.expressions import F
 from django.utils import timezone
-
-
 # Create your models here.
-dir = '../media'
 
+dir = './Media/'
 
 # This class will be herited from
 class Person(models.Model):
@@ -15,9 +13,11 @@ class Person(models.Model):
     prenom = models.CharField(max_length=30, blank=False)
     date_naissance = models.DateField(default=timezone.now)
     photo= models.ImageField(null=True,blank=True,upload_to=dir)
-    adress_email = models.EmailField(max_length=70,blank=False)
+    adress_email = models.EmailField(max_length=70,blank=False,unique=True)
     Added = models.DateField(default=timezone.now)
-
+    
+    def __str__(self) -> str:
+        return self.nom + self.prenom
     class Meta:
         abstract = True
 
@@ -35,6 +35,8 @@ class Module (models.Model):
     type_module = models.CharField(max_length=20,choices=Module_Choices.choices , default = Module_Choices.obligatoire)
     niveau_etude = models.CharField(max_length=30, blank=False)
 
+    def __str__(self) -> str:
+        return str(self.id_module) + self.nom_module
     class Meta:
         db_table='module'
 
@@ -47,34 +49,15 @@ class Groupe (models.Model) :
     nombre_etudiant = models.PositiveIntegerField(default=0,blank=False)
     mail_groupe = models.EmailField(max_length=70,null=True,blank=True)
     niveau_etude = models.CharField(max_length=10, blank=False)
-    module_groupe=models.ManyToManyField(Module ) # , through=  'id_module'  , through_fields =('','')
+    module_groupe=models.ManyToManyField(Module , blank=True) # , through=  'id_module'  , through_fields =('','')
 
+    def __str__(self) -> str:
+        return str(self.id_groupe) +'-'+ self.nom_groupe
     class Meta:
         db_table='Groupe'
 
  
 
-
-class Travail_A_Rendre (models.Model):
-    class EtatTAF (models.TextChoices):
-        valid = "Valide"
-        non_valid = "non valide"
-
-    id_taf = models.AutoField(primary_key=True)
-    titre = models.CharField(max_length=50, blank=False)
-    date_lancement = models.DateTimeField(default=timezone.now)
-    date_lim_retour = models.DateTimeField(default=timezone.now)
-    nature = models.CharField(max_length=50, blank=False)
-    descriptif_taf = models.CharField(max_length=200, blank=False)
-    pieces_enonce = models.FileField(upload_to=dir, max_length= 254) 
-    pieces_rendu = models.FileField(upload_to=dir, max_length= 254) 
-    etat_travail = models.CharField(max_length=10,choices=EtatTAF.choices , default=EtatTAF.valid)
-    note = models.PositiveIntegerField(default=0, blank=True)
-    commentaire = models.CharField(max_length=100, blank=False)
-    id_module=models.ForeignKey(Module,on_delete=models.CASCADE)
-
-    class Meta:
-        db_table='travail_a_rendre'   
 
 
 
@@ -96,8 +79,10 @@ class Etudiant (Person) :
     etat_etudiant = models.CharField(max_length=10,choices=etat_etudiant.choices)
     situation_etudiant = models.CharField(max_length=20,choices=situation_etudiant.choices)
     id_groupe=models.ForeignKey(Groupe,on_delete=models.CASCADE)
-    travail_etud=models.ManyToManyField(Travail_A_Rendre) # , through=  'id_taf'  , through_fields =('','')
-
+    
+    def __str__(self):
+        return super().__str__()
+    
     class Meta:
         db_table='etudiant'
 
@@ -106,6 +91,10 @@ class Enseignant (Person) :
     id_enseignant = models.AutoField(primary_key=True)
     nbr_heure = models.PositiveIntegerField(default=0, blank=False)
     Modul_ensei=models.ManyToManyField(Module) #  , through=  'id_module'  , through_fields =('',''))  
+    
+    def __str__(self):
+        return super().__str__()
+
     class Meta:
         db_table='enseignant'
 
@@ -134,6 +123,8 @@ class Seance (models.Model):
     outils = models.CharField (max_length=100, blank=True)
     idModule=models.ForeignKey(Module,on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return self.id 
     class Meta:
         db_table='seance'    
 
@@ -142,6 +133,31 @@ class Seance (models.Model):
 
 
 
+
+class Travail_A_Rendre (models.Model):
+    class EtatTAF (models.TextChoices):
+        valid = "Valide"
+        non_valid = "non valide"
+
+    id_taf = models.AutoField(primary_key=True)
+    titre = models.CharField(max_length=50, blank=False)
+    date_lancement = models.DateTimeField(default=timezone.now)
+    date_lim_retour = models.DateTimeField(default=timezone.now)
+    nature = models.CharField(max_length=50, blank=False)
+    descriptif_taf = models.CharField(max_length=200, blank=False)
+    pieces_enonce = models.FileField(upload_to=dir, max_length= 254) 
+    pieces_rendu = models.FileField(upload_to=dir, max_length= 254) 
+    etat_travail = models.CharField(max_length=10,choices=EtatTAF.choices , default=EtatTAF.valid)
+    note = models.PositiveIntegerField(default=0, blank=True)
+    commentaire = models.CharField(max_length=100, blank=False)
+    id_module=models.ForeignKey(Module,on_delete=models.CASCADE)
+    travail_etud=models.ManyToManyField(Etudiant) # , through=  'id_taf'  , through_fields =('','')
+
+    def __str__(self) -> str:
+            return self.id_taf + self.titre
+   
+    class Meta:
+        db_table='travail_a_rendre'   
 
 
 

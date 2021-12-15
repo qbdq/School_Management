@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
 
-from .forms import AddEnseignantForm, AddGroupeForm, AddModuleForm, AddSeanceForm, AddStudentForm
+from .forms import *
 from .models import Etudiant
 # Create your views here.
 
@@ -125,3 +125,30 @@ def add_module(request):
     return render(request,"add_module_template.html",{"form":form})
 
 
+
+def manage_student(request):
+    students=Etudiant.objects.all()
+    for student in students:
+        print(student.id_etudiant)
+
+    return render(request,'manage_students_template.html',{"students":students})
+
+
+def edit_student(request,student_id):
+    request.session['student_id']=student_id
+    student=Etudiant.objects.get(admin=student_id)
+    form=EditStudentForm()
+    form.fields['email'].initial=student.admin.email
+    form.fields['first_name'].initial=student.admin.first_name
+    form.fields['last_name'].initial=student.admin.last_name
+    form.fields['username'].initial=student.admin.username
+    form.fields['address'].initial=student.address
+    form.fields['course'].initial=student.course_id.id
+    form.fields['sex'].initial=student.gender
+    form.fields['session_start'].initial=student.session_start_year
+    form.fields['session_end'].initial=student.session_end_year
+    return render(request,"edit_student_template.html",{"form":form,"id":student_id,"username":student.admin.username})
+
+
+def edit_student_save(request):
+    pass
