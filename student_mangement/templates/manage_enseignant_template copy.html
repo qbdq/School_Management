@@ -1,6 +1,6 @@
 {% extends 'base_templates/base_template.html' %}
 {% block page_title %}
-Manage Modules
+Manage Enseignant
 {% endblock page_title %}
 {% block main_content %}
     <!-- Main content -->
@@ -12,7 +12,7 @@ Manage Modules
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Modules Details</h3>
+                <h3 class="card-title">Enseignant Details</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -29,30 +29,27 @@ Manage Modules
                 <table class="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>Id seance</th>
-                      <th>Heure debut </th>
-                      <th>Heure Fin</th>
-                      <th>Nombre D'heure</th>
-                      <th>Num Salle</th>
-                      <th>Etat Seance</th>
-                      <th>Type Seance</th>
-                      <th>Outis</th>
-                      <th>Niveau d'étude</th>
+                      <th>ID</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Date of birth</th>
+                      <th>Date Joined</th>
+                      <th>nombre d'heure</th>
                     </tr>
                   </thead>
                   <tbody>
-                  {% for seance in seances %}
+                  {% for Enseignant in enseignants %}
                     <tr>
-                      <td>{{ seance.id_seance}}</td>
-                      <td>{{ seance.heure_debut }}</td>
-                      <td>{{ seance.heure_fin }}</td>
-                      <td>{{ seance.num_salle }}</td>
-                      <td>{{ seance.etat_seance }}</td>
-                      <td>{{ seance.type_seance }}</td>
-                      <td>{{ seance.outils }}</td>
-                      <td>{{ seance.niveau_etude }}</td>
-                      <td>{{ seance.idModule.nom_module }}</td>
-                      <td><a href="{% url 'edit_seance' seance_id=seance.id_seance %}" class="btn btn-success">Edit</a></td>
+                      <td>{{ Enseignant.id_enseignant}}</td>
+                      <td>{{ Enseignant.nom }}</td>
+                      <td>{{ Enseignant.prenom }}</td>
+                      <td>{{ Enseignant.adress_email }}</td>
+                      <td>{{ Enseignant.date_naissance }}</td>
+                      <td>{{ Enseignant.Added }}</td>
+                      <td>{{ Enseignant.nbr_heure }}</td>
+                        <td><a href="{% url 'edit_enseignant' enseignant_id=Enseignant.id_enseignant %}" class="btn btn-success">Edit</a></td>
+                        <td><a href="{% url 'edit_enseignant' enseignant_id=Enseignant.id_enseignant %}" class="btn btn-danger">Delete</a></td>
                     </tr>
                   {% endfor %}
                   </tbody>

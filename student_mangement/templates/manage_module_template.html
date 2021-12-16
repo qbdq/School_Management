@@ -1,1 +1,61 @@
-test
+{% extends 'base_templates/base_template.html' %}
+{% block page_title %}
+Manage Modules
+{% endblock page_title %}
+{% block main_content %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+
+
+           <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Modules Details</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>Id Module</th>
+                      <th>Nom Module</th>
+                      <th>Nombre D'heure</th>
+                      <th>Type Module</th>
+                      <th>Niveau D'etude</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for module in modules %}
+                    <tr>
+                      <td>{{ module.id_module}}</td>
+                      <td>{{ module.nom_module }}</td>
+                      <td>{{ module.nbr_heures_module }}</td>
+                      <td>{{ module.type_module }}</td>
+                      <td>{{ module.niveau_etude }}</td>
+                      <td><a href="{% url 'edit_module' module_id=module.id_module %}" class="btn btn-success">Edit</a></td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock main_content %}

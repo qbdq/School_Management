@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import base
 from django.db.models.expressions import F
 from django.utils import timezone
+
 # Create your models here.
 
 dir = './Media/'
@@ -113,8 +114,8 @@ class Seance (models.Model):
         Formation = 'Formation'
 
     id_seance = models.AutoField(primary_key=True)
-    heure_debut = models.DateTimeField(default=timezone.now , blank=False)
-    heure_fin = models.DateTimeField(default=timezone.now, blank=False)
+    heure_debut = models.DateTimeField(default=timezone.now , blank=True)
+    heure_fin = models.DateTimeField(default=timezone.now, blank=True)
     num_salle =  models.CharField(max_length=4, blank=False)
     objectif =  models.CharField(max_length=100, blank=True)
     resume = models.CharField(max_length=500, blank=True)
@@ -124,7 +125,7 @@ class Seance (models.Model):
     idModule=models.ForeignKey(Module,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.id 
+        return str(self.id_seance) 
     class Meta:
         db_table='seance'    
 

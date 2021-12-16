@@ -44,8 +44,8 @@ Manage Groupes
                       <td>{{ Groupe.nombre_etudiant }}</td>
                       <td>{{ Groupe.mail_groupe }}</td>
                       <td>{{ Groupe.niveau_etude }}</td>
-                        <td><a href="{% url 'edit_enseignant' id_groupe=Groupe.id_groupe %}" class="btn btn-success">Edit</a></td>
-                        <td><a href="{% url 'edit_enseignant' id_groupe=Groupe.id_groupe%}" class="btn btn-danger">Delete</a></td>
+                        <td><a href="{% url 'edit_groupe' groupe_id=Groupe.id_groupe %}" class="btn btn-success">Edit</a></td>
+                        <td><a href="{% url 'edit_groupe' groupe_id=Groupe.id_groupe %}" class="btn btn-danger">Delete</a></td>
                     </tr>
                   {% endfor %}
                   </tbody>
