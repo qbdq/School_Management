@@ -15,13 +15,15 @@ Manage Student
                 <h3 class="card-title">Student Details</h3>
 
                 <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                  <form class = "d-flex" method="post" action="{% url 'search_student' %}">
+                    {% csrf_token %}
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search student By name">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -52,7 +54,9 @@ Manage Student
                       <td>{{ student.etat_etudiant }}</td>
                       <td>{{ student.situation_etudiant }}</td>
                       <td>{{ student.id_groupe.nom_groupe }}</td>
-                      <td><a href="{% url 'edit_student' student_id=student.id_etudiant %}" class="btn btn-success">Edit</a></td>
+                      <td><a href="{% url 'edit_student' student_id=student.id_etudiant %}" class="btn btn-success">Edit</a>
+                          <a href="{% url 'delete_student' student_id=student.id_etudiant %}" class="btn btn-danger">Delete</a>
+                      </td>
                     </tr>
                   {% endfor %}
                   </tbody>

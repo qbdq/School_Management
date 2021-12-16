@@ -21,13 +21,13 @@ class AddStudentForm(forms.Form):
         ('Derogatrice','Derogatrice'),
         ('Autre','Autre'),
     )
-    """
-    groupes = Groupe.get.all()
-    groupe_list = []
-    for groupe in groupes:
-        item = (groupe.id_groupe,groupe.niveau_etude,groupe.nom_groupe)
-        groupe_list.append(item)
-    """
+
+
+    groupes = Groupe.objects.all()
+    groupe_list=[(q.id_groupe,q.nom_groupe)for q in groupes]
+
+
+    
 
     first_name=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
     last_name=forms.CharField(label="Last Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -36,8 +36,7 @@ class AddStudentForm(forms.Form):
     etat_etudiant = forms.ChoiceField(label="Course",choices=etat,widget=forms.Select(attrs={"class":"form-control"}))
     situation_etudiant = forms.ChoiceField(label="Course",choices=situation,widget=forms.Select(attrs={"class":"form-control"}))
     email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control"}))
-    
-    #groupe=forms.ChoiceField(label="Course",choices=groupe_list,widget=forms.Select(attrs={"class":"form-control"}))
+    groupe=forms.ChoiceField(label="Groupes",choices=groupe_list,widget=forms.Select(attrs={"class":"form-control"}))
 
 class AddEnseignantForm(forms.Form):
     first_name=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -77,7 +76,7 @@ class AddGroupeForm(forms.Form):
     name=forms.CharField(label="Nom du groupe",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
     nombre_etudiant = forms.IntegerField(label="Nombre des etudiants",widget=forms.NumberInput(attrs={"class":"form-control"}))
     email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control"}))
-    niveau_etude = forms.IntegerField(label="Nombre D'heure",widget=forms.NumberInput(attrs={"class":"form-control"}))
+    niveau_etude = forms.CharField(label="Nombre D'heure",widget=forms.TextInput(attrs={"class":"form-control"}))
 
 class AddModuleForm(forms.Form):
     Module_Choices = (
@@ -90,34 +89,4 @@ class AddModuleForm(forms.Form):
     type_module = forms.ChoiceField(label="Type Module",choices=Module_Choices,widget=forms.Select(attrs={"class":"form-control"}))
 
 
-class EditStudentForm(forms.Form):
-    etat = (
-        ('Abscent','Abscent'),
-        ('Exclu','Exclu'),
-        ('Retard','Retard'),
-        ('Present','Present'),
-    )
-
-    situation = (
-        ('Nouveau','Nouveau'),
-        ('Redoublant','Redoublant'),
-        ('Derogatrice','Derogatrice'),
-        ('Autre','Autre'),
-    )
-
-    first_name=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
-    last_name=forms.CharField(label="Last Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
-    date_naissance = forms.DateField(label="Date of birth",widget=DateInput(attrs={"class":"form-control"}))
-    photo = forms.FileField(label="Profile Pic",max_length=50,widget=forms.FileInput(attrs={"class":"form-control"}))
-    etat_etudiant = forms.ChoiceField(label="Course",choices=etat,widget=forms.Select(attrs={"class":"form-control"}))
-    situation_etudiant = forms.ChoiceField(label="Course",choices=situation,widget=forms.Select(attrs={"class":"form-control"}))
-    email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control"}))
-    
-    """
-    courses=Courses.objects.all()
-    course_list=[]
-    for course in courses:
-        small_course=(course.id,course.course_name)
-        course_list.append(small_course)
-    """
     

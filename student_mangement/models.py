@@ -136,6 +136,7 @@ class Seance (models.Model):
 
 
 class Travail_A_Rendre (models.Model):
+    
     class EtatTAF (models.TextChoices):
         valid = "Valide"
         non_valid = "non valide"

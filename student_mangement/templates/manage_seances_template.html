@@ -8,20 +8,21 @@ Manage Modules
       <div class="container-fluid">
 
 
-           <div class="row">
+        <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Modules Details</h3>
-
                 <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                  <form class = "d-flex" method="post" action="{% url 'search_seance' %}">
+                    {% csrf_token %}
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search Seances By Salle">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -32,8 +33,7 @@ Manage Modules
                       <th>Id seance</th>
                       <th>Heure debut </th>
                       <th>Heure Fin</th>
-                      <th>Nombre D'heure</th>
-                      <th>Num Salle</th>
+                      <th>Numero de salle</th>
                       <th>Etat Seance</th>
                       <th>Type Seance</th>
                       <th>Outis</th>
@@ -52,7 +52,9 @@ Manage Modules
                       <td>{{ seance.outils }}</td>
                       <td>{{ seance.niveau_etude }}</td>
                       <td>{{ seance.idModule.nom_module }}</td>
-                      <td><a href="{% url 'edit_seance' seance_id=seance.id_seance %}" class="btn btn-success">Edit</a></td>
+                      <td><a href="{% url 'edit_seance' seance_id=seance.id_seance %}" class="btn btn-success">Edit</a>
+                         <a href="{% url 'delete_seance' seance_id=seance.id_seance %}" class="btn btn-danger">Delete</a>
+                      </td>
                     </tr>
                   {% endfor %}
                   </tbody>

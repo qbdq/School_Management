@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -6,13 +6,19 @@ from django.core.files.storage import FileSystemStorage
 
 from .forms import *
 from .models import Enseignant, Etudiant, Module, Seance
+
+from django.views.decorators.csrf import csrf_protect 
+
 # Create your views here.
 
 # test
 def showDemoPage(request):
-    return render(request,"demo.html")
+    return render(request,"home.html")
+
+
+#homepage
 def showStudentPage(request):
-    return render(request,"student.html")   
+    return render(request,"home.html")   
 
 
 def add_student_save(request):
@@ -149,7 +155,7 @@ def manage_seances(request):
 def edit_student(request,student_id):
     request.session['student_id']=student_id
     student=Etudiant.objects.get(id_etudiant=student_id)
-    form=EditStudentForm()
+    form=AddStudentForm()
     form.fields['email'].initial=student.adress_email
     form.fields['first_name'].initial=student.nom
     form.fields['last_name'].initial=student.prenom
@@ -178,15 +184,15 @@ def edit_enseignant_save(request):
     pass
 
 
-def edit_groupe(request,id_groupe):
-    request.session['id_groupe']=id_groupe
-    groupe=Groupe.objects.get(id_etudiant=id_groupe)
+def edit_groupe(request,groupe_id):
+    request.session['groupe_id']=groupe_id
+    groupe=Groupe.objects.get(id_groupe=groupe_id)
     form=AddGroupeForm()
     form.fields['name'].initial=groupe.nom_groupe
     form.fields['nombre_etudiant'].initial=groupe.nombre_etudiant
     form.fields['email'].initial=groupe.mail_groupe
     form.fields['niveau_etude'].initial= groupe.niveau_etude
-    return render(request,"edit_groupe_template.html",{"form":form,"id":id_groupe})
+    return render(request,"edit_groupe_template.html",{"form":form,"id":groupe_id})
 
 def edit_groupe_save(request):
     pass
@@ -223,5 +229,72 @@ def edit_seance_save(request):
     pass
 
 
-def delete_enseignant(request,id_enseignant):
-    pass
+def delete_student(request,student_id):
+    request.session['student_id']=student_id
+    Etudiant.objects.filter(id_etudiant=student_id).delete()
+    return redirect('/./manage_students/')
+
+def delete_ensegiant(request,enseignant_id):
+    request.session['enseignant_id']=enseignant_id
+    Enseignant.objects.filter(id_enseignant=enseignant_id).delete()
+    return redirect('/./manage_enseignants/')
+
+def delete_groupe(request,groupe_id):
+    request.session['groupe_id']=groupe_id
+    Groupe.objects.filter(id_groupe=groupe_id).delete()
+    return redirect('/./manage_groupes/')
+
+def delete_module(request,module_id):
+    request.session['module_id']=module_id
+    Module.objects.filter(id_module=module_id).delete()
+    return redirect('/./manage_modules/')
+
+def delete_seance(request,seance_id):
+    request.session['seance_id']=seance_id
+    Seance.objects.filter(id_seance=seance_id).delete()
+    return redirect('/./manage_seances/')
+
+
+
+def search_student(request):
+    if request.method == "POST":
+        table_search = request.POST['table_search']
+        students=Etudiant.objects.filter(nom__contains=table_search ,prenom__contains = table_search)
+        return render(request,'manage_students_template.html',{"students":students})
+    else:
+        return render(request,'404.html')
+
+    
+
+def serach_ensegiant(request):
+    if request.method == "POST":
+        table_search = request.POST['table_search']
+        enseignants=Enseignant.objects.filter(nom__contains=table_search ,prenom__contains = table_search)
+        return render(request,'manage_enseignant_template.html',{"enseignants":enseignants})
+    else:
+        return render(request,'404.html')
+
+def search_groupe(request):
+    if request.method == "POST":
+        table_search = request.POST['table_search']
+        groupes=Groupe.objects.filter(nom_groupe__contains=table_search)
+        return render(request,'manage_groupes_template.html',{"groupes":groupes})
+    else:
+        return render(request,'404.html')
+
+def search_module(request):
+    if request.method == "POST":
+        table_search = request.POST['table_search']
+        modules=Module.objects.filter(nom_module__contains=table_search)
+        return render(request,'manage_module_template.html',{"modules":modules})
+    else:
+        return render(request,'404.html')
+
+
+def search_seance(request):
+    if request.method == "POST":
+        table_search = request.POST['table_search']
+        seances=Seance.objects.filter(num_salle__startswith=table_search)
+        return render(request,'manage_seances_template.html',{"seances":seances})
+    else:
+        return render(request,'404.html')

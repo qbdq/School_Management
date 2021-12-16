@@ -15,13 +15,15 @@ Manage Modules
                 <h3 class="card-title">Modules Details</h3>
 
                 <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                  <form class = "d-flex" method="post" action="{% url 'search_module' %}">
+                    {% csrf_token %}
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search module By name">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -44,7 +46,9 @@ Manage Modules
                       <td>{{ module.nbr_heures_module }}</td>
                       <td>{{ module.type_module }}</td>
                       <td>{{ module.niveau_etude }}</td>
-                      <td><a href="{% url 'edit_module' module_id=module.id_module %}" class="btn btn-success">Edit</a></td>
+                      <td><a href="{% url 'edit_module' module_id=module.id_module %}" class="btn btn-success">Edit</a>
+                          <a href="{% url 'delete_module' module_id=module.id_module %}" class="btn btn-danger">Delete</a>
+                      </td>
                     </tr>
                   {% endfor %}
                   </tbody>

@@ -15,13 +15,15 @@ Manage Enseignant
                 <h3 class="card-title">Enseignant Details</h3>
 
                 <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                  <form class = "d-flex" method="post" action="{% url 'serach_ensegiant' %}">
+                    {% csrf_token %}
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search ensegiant By name">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -48,8 +50,10 @@ Manage Enseignant
                       <td>{{ Enseignant.date_naissance }}</td>
                       <td>{{ Enseignant.Added }}</td>
                       <td>{{ Enseignant.nbr_heure }}</td>
-                        <td><a href="{% url 'edit_enseignant' enseignant_id=Enseignant.id_enseignant %}" class="btn btn-success">Edit</a></td>
-                        <td><a href="{% url 'edit_enseignant' enseignant_id=Enseignant.id_enseignant %}" class="btn btn-danger">Delete</a></td>
+                      <td>
+                        <a href="{% url 'edit_enseignant'  enseignant_id=Enseignant.id_enseignant %}" class="btn btn-success">Edit</a>
+                        <a href="{% url 'delete_ensegiant' enseignant_id=Enseignant.id_enseignant %}" class="btn btn-danger">Delete</a>
+                      </td>
                     </tr>
                   {% endfor %}
                   </tbody>
