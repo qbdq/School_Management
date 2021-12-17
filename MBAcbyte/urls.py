@@ -49,11 +49,12 @@ urlpatterns = [
     
 
     path('edit_student_save', views.edit_student_save,name="edit_student_save"),
-    path('edit_enseignant/<int:enseignant_id>', views.edit_enseignant,name="edit_enseignant"),
-    path('edit_groupe/<int:groupe_id>', views.edit_groupe,name="edit_groupe"),
-    path('edit_module/<int:module_id>', views.edit_module,name="edit_module"),
-    path('edit_seance/<int:seance_id>', views.edit_seance,name="edit_seance"),
-    
+    path('edit_enseignant_save', views.edit_enseignant_save,name="edit_enseignant_save"),
+    path('edit_groupe_save', views.edit_groupe_save,name="edit_groupe_save"),
+    path('edit_module_save', views.edit_module_save,name="edit_module_save"),
+    path('edit_seance_save', views.edit_seance_save,name="edit_seance_save"),
+
+
 
     path('delete_student/<int:student_id>', views.delete_student,name="delete_student"),
     path('delete_ensegiant/<int:enseignant_id>', views.delete_ensegiant,name="delete_ensegiant"),
@@ -66,6 +67,12 @@ urlpatterns = [
     path('search_groupe/', views.search_groupe,name="search_groupe"),
     path('search_module/', views.search_module,name="search_module"),
     path('search_seance/', views.search_seance,name="search_seance"),
+
+    path('simple_stats/', views.simple_stats,name="simple_stats"),  
+    path('advances_stats/', views.advances_stats,name="advances_stats"),  
+    
+    path('contact_us/', views.contact_us,name="contact_us"),  
+    path('team/', views.team,name="team"),  
 
     
     path('admin/', admin.site.urls)

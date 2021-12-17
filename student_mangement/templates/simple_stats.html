@@ -1,0 +1,261 @@
+{% extends 'base_templates/base_template.html' %}
+{% block page_title %}
+Stats
+{% endblock page_title %}
+{% block main_content %}
+    <!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-info">
+            <h3 class="widget-user-username">Gharsa Abderrahmen</h3>
+            <h5 class="widget-user-desc">Founder & CEO MBACBYTE</h5>
+            </div>
+            <div class="widget-user-image">
+            {% load static %}
+
+            <img class="img-circle elevation-2" src="{% static "dist/img/abdo.jpg" %}" alt="User Avatar">
+            </div>
+            <div class="card-footer">
+            <div class="row">
+                <div class="col-sm-4 border-right">
+                <div class="description-block">
+                    <h5 class="description-header">4</h5>
+                    <span class="description-text">Admin Added</span>
+                </div>
+                <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 border-right">
+                <div class="description-block">
+                    <h5 class="description-header">{{N_Etudiant}}</h5>
+                    <span class="description-text">STUDENT ADDED</span>
+                </div>
+                <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4">
+                <div class="description-block">
+                    <h5 class="description-header">{{N_Ensegiant}}</h5>
+                    <span class="description-text">N_Ensegiant</span>
+                </div>
+                <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            </div>
+    <h5 class="mb-2">Etudiant Par situation </h5>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-info"><i class="fas fa-plus"></i></span>
+            <div class="info-box-content">
+            <span class="info-box-text">Nouveaux etudiants</span>
+            <span class="info-box-number">{{new}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-success"><i class="fas fa-redo-alt"></i></span>
+
+            <div class="info-box-content">
+            <span class="info-box-text">Redoublant </span>
+            <span class="info-box-number">{{redoublant}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-warning"><i class="fab fa-dyalog"></i></span>
+
+            <div class="info-box-content">
+            <span class="info-box-text">Dégorataire </span>
+            <span class="info-box-number">{{derogataire}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-danger"><i class="fas fa-file-signature"></i></span>
+
+            <div class="info-box-content">
+            <span class="info-box-text">Autre </span>
+            <span class="info-box-number">{{other}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <h5 class="mb-2">Etudiant Par Etat </h5>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-info"><i class="fas fa-minus"></i></span>
+            <div class="info-box-content">
+            <span class="info-box-text">Abscents</span>
+            <span class="info-box-number">{{absence}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-success"><i class="fas fa-check"></i></span>
+
+            <div class="info-box-content">
+            <span class="info-box-text">Present </span>
+            <span class="info-box-number">{{Present}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-warning"><i class="fas fa-sign-out-alt"></i></span>
+
+            <div class="info-box-content">
+            <span class="info-box-text">Retard </span>
+            <span class="info-box-number">{{Retard}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-danger"><i class="fas fa-outdent"></i></span>
+
+            <div class="info-box-content">
+            <span class="info-box-text">Exclu </span>
+            <span class="info-box-number">{{Exclu}}</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Small Box (Stat card) -->
+    <h5 class="mb-2 mt-4">Numbers</h5>
+    <div class="row">
+        <div class="col-lg-3 col-6">
+        <!-- small card -->
+        <div class="small-box bg-success">
+            <div class="inner">
+            <h3>{{N_Etudiant}}</h3>
+            <p>Nombre des Etudiants</p>
+            </div>
+            <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+            </div>
+            {% url 'manage_students' as manage_students %}
+            <a href="{% url 'manage_students' %}" class="small-box-footer">
+            More info <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+        <!-- small card -->
+        <div class="small-box bg-success">
+            <div class="inner">
+            <h3>{{N_Ensegiant}}</h3>
+            <p>Nombre des Ensegiant</p>
+            </div>
+            <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+            </div>
+            {% url 'manage_enseignants' as manage_enseignants %}
+            <a href="{% url 'manage_enseignants' %}" class="small-box-footer">
+            More info <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                <h3>{{N_Module}}</h3>
+                <p>Nombre des Module</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+                </div>
+                {% url 'manage_modules' as manage_modules %}
+                <a href="{% url 'manage_modules' %}" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small card -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                    <h3>{{N_Groupe}}</h3>
+                    <p>Nombre des Groupe</p>
+                    </div>
+                    <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                    </div>
+                    {% url 'manage_groupes' as manage_groupes %}
+                    <a href="{% url 'manage_groupes' %}" class="small-box-footer">
+                    More info <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+                </div>
+                <!-- ./col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Small Box (Stat card) -->
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                <h3>{{N_Seance}}</h3>
+                <p>Nombre des Seance</p>
+                </div>
+                <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+                </div>
+                {% url 'manage_seances' as manage_seances %}
+                <a href="{% url 'manage_seances' %}" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </div>
+            </div>
+            <!-- ./col -->
+    </div>
+    <!-- /.row -->
+
+    </div><!-- /.container-fluid -->
+</section>
+    <!-- /.content -->
+
+
+    {% endblock main_content %}

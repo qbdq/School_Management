@@ -32,6 +32,24 @@
                 </a>
               </li>
               <li class="nav-item">
+                {% url 'simple_stats' as simple_stats %}
+                <a href="{% url 'simple_stats' %}" class="nav-link">
+                  <i class="far fa-chart-bar"></i>
+                  <p>
+                    Simple Stats
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                {% url 'advances_stats' as advances_stats %}
+                <a href="{% url 'advances_stats' %}" class="nav-link">
+                  <i class="fas fa-chart-line"></i>
+                  <p>
+                    Advanced Stas
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-user-plus"></i>
                   <p>
@@ -123,6 +141,24 @@
                     </a>
                   </li>
                 </ul>
+                <li class="nav-item">
+                  {% url 'team' as team %}
+                  <a href="{% url 'team' %}" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                      Team
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  {% url 'contact_us' as contact_us %}
+                  <a href="{% url 'contact_us' %}" class="nav-link">
+                    <i class="nav-icon fas fa-address-card"></i>
+                    <p>
+                      Contact us
+                    </p>
+                  </a>
+                </li>
               </li>
             </ul>
         </nav>

@@ -96,3 +96,46 @@ class AddModuleForm(forms.Form):
 
 
     
+
+
+class EditStudentForm(forms.Form):
+
+    etat = (
+        ('Abscent','Abscent'),
+        ('Exclu','Exclu'),
+        ('Retard','Retard'),
+        ('Present','Present'),
+    )
+
+    situation = (
+        ('Nouveau','Nouveau'),
+        ('Redoublant','Redoublant'),
+        ('Derogatrice','Derogatrice'),
+        ('Autre','Autre'),
+    )
+
+
+    groupes = Groupe.objects.all()
+    groupe_list=[(q.id_groupe,q.nom_groupe)for q in groupes]
+
+    first_name=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
+    last_name=forms.CharField(label="Last Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
+    date_naissance = forms.DateField(label="Date of birth",widget=DateInput(attrs={"class":"form-control"}))
+    etat_etudiant = forms.ChoiceField(label="Course",choices=etat,widget=forms.Select(attrs={"class":"form-control"}))
+    situation_etudiant = forms.ChoiceField(label="Course",choices=situation,widget=forms.Select(attrs={"class":"form-control"}))
+    email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control"}))
+    groupe=forms.ChoiceField(label="Groupes",choices=groupe_list,widget=forms.Select(attrs={"class":"form-control"}))
+
+class EditEnsegiantForm(forms.Form):
+    first_name=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
+    last_name=forms.CharField(label="Last Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
+    email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control"}))
+    date_naissance = forms.DateField(label="Date of birth",widget=DateInput(attrs={"class":"form-control"}))
+    nbr_heure = forms.IntegerField(label="Nombre D'heure",widget=forms.NumberInput(attrs={"class":"form-control"}))
+
+
+class AddContactForm(forms.Form):
+    nom=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
+    prenom=forms.CharField(label="Last Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
+    adress_email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control"}))
+    say =  forms.CharField(label="Tell us !",max_length=50,widget=forms.Textarea(attrs={"class":"form-control"}))

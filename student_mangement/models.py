@@ -196,4 +196,10 @@ class Absence(models.Model):
         db_table='absence'
 
 
+class Contact(models.Model):
+    nom = models.CharField(max_length=30, blank=False)
+    prenom = models.CharField(max_length=30, blank=False)
+    adress_email = models.EmailField(max_length=70,blank=False,unique=True)
+    say = models.CharField(max_length=500, blank=True)
+
 
