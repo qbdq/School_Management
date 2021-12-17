@@ -2,6 +2,7 @@ from enum import unique
 from django.db import models
 from django.db.models import base
 from django.db.models.expressions import F
+from django.db.models.fields import json
 from django.utils import timezone
 
 # Create your models here.
@@ -18,7 +19,7 @@ class Person(models.Model):
 
     def __str__(self) -> str:
         return self.nom + self.prenom
-        
+
     class Meta:
         abstract = True
 
@@ -132,7 +133,18 @@ class Seance (models.Model):
 
    
 
+class Piece_Joints(models.Model):
 
+     class format_pieces(models.TextChoices):
+        pdf = 'pdf'
+        word = 'word'
+        xml = 'xml'
+        json = 'json'
+        py = 'py'
+
+     id_piece_joints= models.AutoField(primary_key=True)
+     type_piece= models.CharField(max_length=30, blank=False)
+     format_piece = models.CharField(max_length=30, blank=False,choices=format_pieces.choices)
 
 
 class Travail_A_Rendre (models.Model):
@@ -154,6 +166,7 @@ class Travail_A_Rendre (models.Model):
     commentaire = models.CharField(max_length=100, blank=False)
     id_module=models.ForeignKey(Module,on_delete=models.CASCADE)
     travail_etud=models.ManyToManyField(Etudiant) # , through=  'id_taf'  , through_fields =('','')
+    id_piece_joints=models.ForeignKey(Piece_Joints,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
             return self.id_taf + self.titre

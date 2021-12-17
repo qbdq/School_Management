@@ -575,7 +575,7 @@ def simple_stats(request):
 
 def advances_stats(request):
 
-    return render(request,'advanced_stats.html')
+    return render(request,'complex_stats.html')
 
 def contact_us(request):
     form=AddContactForm()
