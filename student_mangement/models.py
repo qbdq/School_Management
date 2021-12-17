@@ -6,17 +6,15 @@ from django.utils import timezone
 
 # Create your models here.
 
-dir = './Media/'
 
 # This class will be herited from
 class Person(models.Model):
     nom = models.CharField(max_length=30, blank=False)
     prenom = models.CharField(max_length=30, blank=False)
     date_naissance = models.DateField(default=timezone.now)
-    photo= models.ImageField(null=True,blank=True,upload_to=dir)
+    photo= models.ImageField(null=True,blank=True)
     adress_email = models.EmailField(max_length=70,blank=False,unique=True)
     Added = models.DateField(default=timezone.now)
-    
     def __str__(self) -> str:
         return self.nom + self.prenom
     class Meta:
@@ -46,10 +44,10 @@ class Module (models.Model):
 
 class Groupe (models.Model) : 
     id_groupe = models.AutoField(primary_key=True)
-    nom_groupe = models.CharField(max_length=10, blank=False)
+    nom_groupe = models.CharField(max_length=100, blank=False)
     nombre_etudiant = models.PositiveIntegerField(default=0,blank=False)
     mail_groupe = models.EmailField(max_length=70,null=True,blank=True)
-    niveau_etude = models.CharField(max_length=10, blank=False)
+    niveau_etude = models.CharField(max_length=100, blank=False)
     module_groupe=models.ManyToManyField(Module , blank=True) # , through=  'id_module'  , through_fields =('','')
 
     def __str__(self) -> str:
@@ -66,21 +64,21 @@ class Groupe (models.Model) :
 
 class Etudiant (Person) :
     id_etudiant = models.AutoField(primary_key=True)
-    class etat_etudiant(models.TextChoices):
+    class etat_etudiants(models.TextChoices):
         Absence = 'Abscent' 
         Exclu = 'Exclu'
         Retard = 'Retard'
         Present = 'Present'
-    class situation_etudiant(models.TextChoices):
+    class situation_etudiants(models.TextChoices):
         Nouveau = 'Nouveau'
         Redoublant = 'Redoublant'
         Derogatrice = 'Derogatrice'
         Autre = 'Autre'
 
-    etat_etudiant = models.CharField(max_length=10,choices=etat_etudiant.choices)
-    situation_etudiant = models.CharField(max_length=20,choices=situation_etudiant.choices)
+    etat_etudiant = models.CharField(max_length=10,choices=etat_etudiants.choices)
+    situation_etudiant = models.CharField(max_length=20,choices=situation_etudiants.choices)
     id_groupe=models.ForeignKey(Groupe,on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return super().__str__()
     
@@ -147,8 +145,8 @@ class Travail_A_Rendre (models.Model):
     date_lim_retour = models.DateTimeField(default=timezone.now)
     nature = models.CharField(max_length=50, blank=False)
     descriptif_taf = models.CharField(max_length=200, blank=False)
-    pieces_enonce = models.FileField(upload_to=dir, max_length= 254) 
-    pieces_rendu = models.FileField(upload_to=dir, max_length= 254) 
+    pieces_enonce = models.FileField(max_length= 254) 
+    pieces_rendu = models.FileField(max_length= 254) 
     etat_travail = models.CharField(max_length=10,choices=EtatTAF.choices , default=EtatTAF.valid)
     note = models.PositiveIntegerField(default=0, blank=True)
     commentaire = models.CharField(max_length=100, blank=False)

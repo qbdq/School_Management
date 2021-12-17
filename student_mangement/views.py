@@ -3,9 +3,8 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
-
 from .forms import *
-from .models import Enseignant, Etudiant, Module, Seance
+from .models import Enseignant, Etudiant, Module, Person, Seance
 
 from django.views.decorators.csrf import csrf_protect 
 
@@ -20,29 +19,41 @@ def showDemoPage(request):
 def showStudentPage(request):
     return render(request,"home.html")   
 
-
 def add_student_save(request):
     if request.method!="POST":
         return render(request, "404.html")
     else:
         form=AddStudentForm(request.POST,request.FILES)
-        print('test')
         if form.is_valid():
             first_name=form.cleaned_data["first_name"]
             last_name=form.cleaned_data["last_name"]
             date_naissance=form.cleaned_data["date_naissance"]
+            etat_etudiant=form.cleaned_data["etat_etudiant"]
+            situation_etudiant=form.cleaned_data["situation_etudiant"]
             email=form.cleaned_data["email"]
-            course_id=form.cleaned_data["groupe.id_groupe"]
-            etat_etudiant = form.cleaned_data["etat_etudiant"]
-            situation_etudiant = form.cleaned_data["situation_etudiant"] 
-            photo=request.FILES['photo']
+            groupe=form.cleaned_data["groupe"]
+            profile_pic=request.FILES['photo']
             fs=FileSystemStorage()
-            filename=fs.save(photo.name,photo)
+            filename=fs.save(profile_pic.name,profile_pic)
             profile_pic_url=fs.url(filename)
-            try:
-                messages.success(request,"Successfully Added Student")
+            profile_pic_url=profile_pic_url[len("media/"):]
+            try :
+                user=Etudiant()
+                groupe = Groupe.objects.get(id_groupe=int(groupe))
+                user.nom=first_name
+                user.prenom=last_name
+                user.date_naissance=date_naissance
+                user.adress_email=email
+                user.photo=profile_pic_url
+                user.etat_etudiant=etat_etudiant
+                user.situation_etudiant=situation_etudiant
+                user.id_groupe=groupe
+                user.save()
+                messages.success(request,"Successfully Added Student {}".format(first_name))
+                return HttpResponseRedirect(reverse("add_student"))
             except:
-                messages.error(request,"Failed to Add Student")
+                messages.error(request,"Failed to Add Student {}".format(first_name))
+                return HttpResponseRedirect(reverse("add_student"))
         else:
             form=AddStudentForm(request.POST)
             return render(request, "add_student_template.html", {"form": form})
@@ -53,13 +64,32 @@ def add_enseignant_save(request):
     else:
         form=AddEnseignantForm(request.POST,request.FILES)
         if form.is_valid():
-            pass
+            first_name=form.cleaned_data["first_name"]
+            last_name=form.cleaned_data["last_name"]
+            email=form.cleaned_data["email"]
+            date_naissance=form.cleaned_data["date_naissance"]
+            nbr_heure=form.cleaned_data["nbr_heure"]
+            profile_pic=request.FILES['photo']
+            fs=FileSystemStorage()
+            filename=fs.save(profile_pic.name,profile_pic)
+            profile_pic_url=fs.url(filename)
+            profile_pic_url=profile_pic_url[len("media/"):]
             try:
-                messages.success(request,"Successfully Added xx")
+                user=Enseignant()
+                user.nom=first_name
+                user.prenom=last_name
+                user.date_naissance=date_naissance
+                user.adress_email=email
+                user.photo=profile_pic_url
+                user.nbr_heure=nbr_heure
+                user.save()
+                messages.success(request,"Successfully Added Proffesor {}".format(first_name))
+                return HttpResponseRedirect(reverse("add_enseignant"))
             except:
-                messages.error(request,"Failed to Add xxx")
+                messages.error(request,"Failed to Add Proffesor {}".format(first_name))
+                return HttpResponseRedirect(reverse("add_enseignant"))
         else:
-            form=AddStudentForm(request.POST)
+            form=AddEnseignantForm(request.POST)
             return render(request, "add_enseignant_template.html", {"form": form})
     
 def add_seance_save(request):
@@ -67,46 +97,92 @@ def add_seance_save(request):
         return render(request, "404.html")
     else:
         form=AddSeanceForm(request.POST,request.FILES)
+        print(form.errors)
         if form.is_valid():
-            pass
+            heure_debut=form.cleaned_data["heure_debut"]
+            heure_fin=form.cleaned_data["heure_fin"]
+            num_salle=form.cleaned_data["num_salle"]
+            objectif=form.cleaned_data["objectif"]
+            resume=form.cleaned_data["resume"]
+            etat_seance=form.cleaned_data["etat_seance"]
+            type_seance=form.cleaned_data["type_seance"]
+            outils=form.cleaned_data["outils"]
+            module_id=form.cleaned_data["module"]
+            module = Module.objects.get(id_module=int(module_id))
             try:
-                messages.success(request,"Successfully Added xx")
+                seance=Seance()
+                seance.heure_debut=heure_debut
+                seance.heure_fin=heure_fin
+                seance.num_salle=num_salle
+                seance.objectif=objectif
+                seance.resume=resume
+                seance.etat_seance=etat_seance
+                seance.type_seance=type_seance
+                seance.outils=outils
+                seance.idModule=module
+                seance.save()
+                messages.success(request,"Successfully Added session")
+                return HttpResponseRedirect(reverse("add_seance"))
             except:
-                messages.error(request,"Failed to Add xxx")
+                messages.error(request,"Failed to Add session ")
+                return HttpResponseRedirect(reverse("add_seance"))
         else:
-            form=AddStudentForm(request.POST)
-            return render(request, "add_enseignant_template.html", {"form": form})
-   
+            form=AddSeanceForm(request.POST)
+            return render(request, "add_seance_template.html", {"form": form})
+
 def add_groupe_save(request):
     if request.method!="POST":
         return render(request, "404.html")
     else:
         form=AddGroupeForm(request.POST,request.FILES)
         if form.is_valid():
-            pass
+            name=form.cleaned_data["name"]
+            nombre_etudiant=form.cleaned_data["nombre_etudiant"]
+            email=form.cleaned_data["email"]
+            niveau_etude=form.cleaned_data["niveau_etude"]
             try:
-                messages.success(request,"Successfully Added xx")
+                groupe= Groupe()
+                groupe.nom_groupe=name
+                groupe.nombre_etudiant=nombre_etudiant
+                groupe.mail_groupe=email
+                groupe.niveau_etude=niveau_etude
+                groupe.save()
+                messages.success(request,"Successfully Added Group {}".format(name))
+                return HttpResponseRedirect(reverse("add_groupe"))
             except:
-                messages.error(request,"Failed to Add xxx")
+                messages.error(request,"Failed to Add  Groupe ")
+                return HttpResponseRedirect(reverse("add_groupe"))
         else:
-            form=AddStudentForm(request.POST)
-            return render(request, "add_enseignant_template.html", {"form": form})
-   
+            form=AddGroupeForm(request.POST)
+            return render(request, "add_groupe_template.html", {"form": form})
+
+
 def add_module_save(request):
     if request.method!="POST":
         return render(request, "404.html")
     else:
         form=AddModuleForm(request.POST,request.FILES)
         if form.is_valid():
-            pass
+            nom_module=form.cleaned_data["name"]
+            nbr_heures_module=form.cleaned_data["nbr_heure"]
+            type_module=form.cleaned_data["niveau_etude"]
+            niveau_etude=form.cleaned_data["type_module"]
             try:
-                messages.success(request,"Successfully Added xx")
+                module= Module()
+                module.nom_module=nom_module
+                module.nbr_heures_module=nbr_heures_module
+                module.type_module=type_module
+                module.niveau_etude=niveau_etude
+                module.save()
+                messages.success(request,"Successfully Added Module {}".format(nom_module))
+                return HttpResponseRedirect(reverse("add_groupe"))
             except:
-                messages.error(request,"Failed to Add xxx")
+                messages.error(request,"Failed to Add  Module ")
+                return HttpResponseRedirect(reverse("add_groupe"))
         else:
-            form=AddStudentForm(request.POST)
-            return render(request, "add_enseignant_template.html", {"form": form})
-   
+            form=AddModuleForm(request.POST)
+            return render(request, "add_module_template.html", {"form": form})
+
 
 
 def add_student(request):
@@ -166,7 +242,44 @@ def edit_student(request,student_id):
     return render(request,"edit_student_template.html",{"form":form,"id":student_id})
 
 def edit_student_save(request):
-    pass
+    if request.method!="POST":
+        return render(request, "404.html")
+    else:
+        form=AddStudentForm(request.POST,request.FILES)
+        if form.is_valid():
+            first_name=form.cleaned_data["first_name"]
+            last_name=form.cleaned_data["last_name"]
+            date_naissance=form.cleaned_data["date_naissance"]
+            etat_etudiant=form.cleaned_data["etat_etudiant"]
+            situation_etudiant=form.cleaned_data["situation_etudiant"]
+            email=form.cleaned_data["email"]
+            groupe=form.cleaned_data["groupe"]
+            profile_pic=request.FILES['photo']
+            fs=FileSystemStorage()
+            filename=fs.save(profile_pic.name,profile_pic)
+            profile_pic_url=fs.url(filename)
+            profile_pic_url=profile_pic_url[len("media/"):]
+            try :
+                user=Etudiant()
+                groupe = Groupe.objects.get(id_groupe=int(groupe))
+                user.nom=first_name
+                user.prenom=last_name
+                user.date_naissance=date_naissance
+                user.adress_email=email
+                user.photo=profile_pic_url
+                user.etat_etudiant=etat_etudiant
+                user.situation_etudiant=situation_etudiant
+                user.id_groupe=groupe
+                user.save()
+                messages.success(request,"Successfully Added Student {}".format(first_name))
+                return HttpResponseRedirect(reverse("edit_student"))
+            except:
+                messages.error(request,"Failed to Add Student {}".format(first_name))
+                return HttpResponseRedirect(reverse("edit_student"))
+        else:
+            form=AddStudentForm(request.POST)
+            return render(request, "edit_student_template.html", {"form": form})
+    
 
 
 def edit_enseignant(request,enseignant_id):

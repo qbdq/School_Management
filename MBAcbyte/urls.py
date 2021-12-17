@@ -28,11 +28,12 @@ urlpatterns = [
     path('add_seance/',views.add_seance ,name='add_seance'),
     path('add_groupe/',views.add_groupe ,name='add_groupe'),
     path('add_module/',views.add_module ,name='add_module'),
+    
     path('add_student_save', views.add_student_save,name="add_student_save"),
-    path('add_enseignant_save', views.add_student_save,name="add_enseignant_save"),
-    path('add_seance_save', views.add_student_save,name="add_seance_save"),
-    path('add_groupe_save', views.add_student_save,name="add_groupe_save"),
-    path('add_module_save', views.add_student_save,name="add_module_save"),
+    path('add_enseignant_save', views.add_enseignant_save,name="add_enseignant_save"),
+    path('add_seance_save', views.add_seance_save,name="add_seance_save"),
+    path('add_groupe_save', views.add_groupe_save,name="add_groupe_save"),
+    path('add_module_save', views.add_module_save,name="add_module_save"),
 
     path('manage_students/',views.manage_student,name='manage_students'),
     path('manage_enseignants/',views.manage_enseignants,name='manage_enseignants'),
@@ -46,6 +47,14 @@ urlpatterns = [
     path('edit_module/<int:module_id>', views.edit_module,name="edit_module"),
     path('edit_seance/<int:seance_id>', views.edit_seance,name="edit_seance"),
     
+
+    path('edit_student_save', views.edit_student_save,name="edit_student_save"),
+    path('edit_enseignant/<int:enseignant_id>', views.edit_enseignant,name="edit_enseignant"),
+    path('edit_groupe/<int:groupe_id>', views.edit_groupe,name="edit_groupe"),
+    path('edit_module/<int:module_id>', views.edit_module,name="edit_module"),
+    path('edit_seance/<int:seance_id>', views.edit_seance,name="edit_seance"),
+    
+
     path('delete_student/<int:student_id>', views.delete_student,name="delete_student"),
     path('delete_ensegiant/<int:enseignant_id>', views.delete_ensegiant,name="delete_ensegiant"),
     path('delete_groupe/<int:groupe_id>', views.delete_groupe,name="delete_groupe"),
