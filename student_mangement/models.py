@@ -15,8 +15,10 @@ class Person(models.Model):
     photo= models.ImageField(null=True,blank=True)
     adress_email = models.EmailField(max_length=70,blank=False,unique=True)
     Added = models.DateField(default=timezone.now)
+
     def __str__(self) -> str:
         return self.nom + self.prenom
+        
     class Meta:
         abstract = True
 

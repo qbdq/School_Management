@@ -1,0 +1,104 @@
+{% extends 'base_templates/base_template.html' %}
+{% block page_title %}
+Home
+{% endblock page_title %}
+{% block main_content %}
+
+  <!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        {% load static %}
+        <div class="row">
+          <div class="col-md-4">
+            <!-- Widget: user widget style 2 -->
+            <div class="card card-widget widget-user-2 shadow-sm">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header bg-indigo">
+                <div class="widget-user-image">
+                  <img class="img-circle elevation-2" src="{% static "dist/img/abdo.jpg" %}" alt="User Avatar">
+                </div>
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username">Abderrahmen Gharsa</h3>
+                <h5 class="widget-user-desc">Lead Developer</h5>
+              </div>
+
+            </div>
+            <!-- /.widget-user -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-4">
+            <!-- Widget: user widget style 2 -->
+            <div class="card card-widget widget-user-2 shadow-sm">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header bg-success">
+                <div class="widget-user-image">
+                  <img class="img-circle elevation-2" src="{% static "dist/img/nadia.jpg" %}" alt="User Avatar">
+                </div>
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username">Nadia Karboul</h3>
+                <h5 class="widget-user-desc">Lead Developer</h5>
+              </div>
+
+            </div>
+            <!-- /.widget-user -->
+            
+          </div>
+          <div class="col-md-4">
+            <!-- Widget: user widget style 2 -->
+            <div class="card card-widget widget-user-2 shadow-sm">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header bg-navy">
+                <div class="widget-user-image">
+                  <img class="img-circle elevation-2" src="{% static "dist/img/amir.jpg" %}" alt="User Avatar">
+                </div>
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username">Amir Ben Saad</h3>
+                <h5 class="widget-user-desc">Lead Developer</h5>
+              </div>
+
+            </div>
+            <!-- /.widget-user -->
+            
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Widget: user widget style 2 -->
+                <div class="card card-widget widget-user-2 shadow-sm">
+                  <!-- Add the bg color to the header using any of the bg-* classes -->
+                  <div class="widget-user-header bg-orange">
+                    <div class="widget-user-image">
+                      <img class="img-circle elevation-3" src="{% static "dist/img/camilia.jpg" %}" alt="User Avatar">
+                    </div>
+                    <!-- /.widget-user-image -->
+                    <h3 class="widget-user-username">Camilia Hassen</h3>
+                    <h5 class="widget-user-desc">Lead Developer</h5>
+                  </div>
+    
+                </div>
+                <!-- /.widget-user -->
+              </div>
+              <div class="col-md-4">
+              </div>
+                <div class="col-md-4">
+                    <!-- Widget: user widget style 2 -->
+                    <div class="card card-widget widget-user-2 shadow-sm">
+                      <!-- Add the bg color to the header using any of the bg-* classes -->
+                      <div class="widget-user-header bg-warning">
+                        <div class="widget-user-image">
+                          <img class="img-circle elevation-2" src="{% static "dist/img/farh.jpg" %}" alt="User Avatar">
+                        </div>
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">Farah Balloum</h3>
+                        <h5 class="widget-user-desc">Lead Developer</h5>
+                      </div>
+        
+                    </div>
+                    <!-- /.widget-user -->
+                  </div>
+        </div>
+        
+    </div>
+</section>
+    <!-- /.content -->
+{% endblock main_content %}
