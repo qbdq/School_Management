@@ -197,6 +197,7 @@ class Enregistrement (models.Model):
         db_table='enregistrement'
 
 class Absence(models.Model):
+    
     class justifier(models.TextChoices):
         justifier = 'justifier'
         nonjustifer = 'non justifier'
