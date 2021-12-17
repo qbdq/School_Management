@@ -197,10 +197,15 @@ class Enregistrement (models.Model):
         db_table='enregistrement'
 
 class Absence(models.Model):
+    class justifier(models.TextChoices):
+        justifier = 'justifier'
+        nonjustifer = 'non justifier'
+
     id_absence= models.AutoField(primary_key=True)
     date_absence= models.DateTimeField(default=timezone.now)
     motif=models.CharField(max_length=100, blank=True)
-    justificatif=models.CharField(max_length=100, blank=True)
+    justificatif=models.CharField(max_length=100, choices=justifier.choices , blank=False)
+    justification=models.FileField(max_length= 254,blank=True) 
     id_etudiant=models.ForeignKey(Etudiant,on_delete=models.CASCADE)
     Abs_se= models.OneToOneField(
         Seance,
